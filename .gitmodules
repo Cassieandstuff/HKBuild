@@ -1,0 +1,3 @@
+[submodule "lib/HKX2E"]
+	path = lib/HKX2E
+	url = https://github.com/Monitor221hz/HKX2-Enhanced-Library.git

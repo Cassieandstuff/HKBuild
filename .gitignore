@@ -1,0 +1,46 @@
+# Build output
+bin/
+obj/
+hkbuild_sc/
+
+# CMake
+build/
+build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+*.cmake
+!CMakeLists.txt
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.aps
+*.ncb
+*.sdf
+*.opensdf
+*.vcxproj.user
+*.vcxproj.filters
+
+# Rider / JetBrains
+.idea/
+*.DotSettings.user
+
+# VS Code
+.vscode/
+
+# NuGet
+*.nupkg
+packages/
+
+# .NET
+*.dll
+*.exe
+!hkbuild_sc/HKBuild.exe
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
