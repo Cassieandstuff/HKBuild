@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Remove="lib\**" />
     <Compile Remove="ui\**" />
+    <Compile Remove="src\Program.cs" />
   </ItemGroup>
 
   <ItemGroup>
