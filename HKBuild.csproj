@@ -8,11 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="lib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\lib\HKX2E\HKX2\HKX2E.csproj" />
+    <ProjectReference Include="lib\HKX2E\HKX2\HKX2E.csproj" />
   </ItemGroup>
 
 </Project>
