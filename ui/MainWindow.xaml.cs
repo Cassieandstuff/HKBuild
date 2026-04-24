@@ -62,17 +62,15 @@ public partial class MainWindow : Window
 
     private void BrowseDecompileOutput_Click(object sender, RoutedEventArgs e)
     {
-        var dlg = new System.Windows.Forms.FolderBrowserDialog
+        var dlg = new Microsoft.Win32.OpenFolderDialog
         {
-            Description         = "Select output folder for YAML source tree",
-            UseDescriptionForTitle = true,
-            ShowNewFolderButton = true
+            Title = "Select output folder for YAML source tree"
         };
         if (DecompileOutput.Text.Trim() is { Length: > 0 } cur)
             dlg.InitialDirectory = Path.GetDirectoryName(cur) ?? cur;
 
-        if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            DecompileOutput.Text = dlg.SelectedPath;
+        if (dlg.ShowDialog() == true)
+            DecompileOutput.Text = dlg.FolderName;
     }
 
     private void DecompileDefault_Click(object sender, RoutedEventArgs e) =>
@@ -183,18 +181,17 @@ public partial class MainWindow : Window
 
     private void BrowseSourceFolder_Click(object sender, RoutedEventArgs e)
     {
-        var dlg = new System.Windows.Forms.FolderBrowserDialog
+        var dlg = new Microsoft.Win32.OpenFolderDialog
         {
-            Description         = "Select YAML source folder",
-            UseDescriptionForTitle = true
+            Title = "Select YAML source folder"
         };
         if (CompileInput.Text.Trim() is { Length: > 0 } cur)
             dlg.InitialDirectory = Directory.Exists(cur) ? cur : (Path.GetDirectoryName(cur) ?? "");
 
-        if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (dlg.ShowDialog() == true)
         {
-            CompileInput.Text = dlg.SelectedPath;
-            SetDefaultCompileOutput(dlg.SelectedPath);
+            CompileInput.Text = dlg.FolderName;
+            SetDefaultCompileOutput(dlg.FolderName);
         }
     }
 
