@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Remove="lib\**" />
+    <Compile Remove="ui\**" />
   </ItemGroup>
 
   <ItemGroup>
