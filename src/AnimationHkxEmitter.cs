@@ -1,5 +1,5 @@
 using HKBuild.Models;
-using HKX2E;
+using HKX2;
 
 namespace HKBuild;
 

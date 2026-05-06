@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="lib\HKX2E\HKX2\HKX2E.csproj" />
+    <ProjectReference Include="lib\HKX2\HKX2\HKX2.csproj" />
   </ItemGroup>
 
 </Project>

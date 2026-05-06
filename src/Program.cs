@@ -1,5 +1,5 @@
 using HKBuild;
-using HKX2E;
+using HKX2;
 
 if (args.Length < 1)
 {
@@ -149,7 +149,7 @@ static int RunGraph(string[] args)
     }
 }
 
-// ── Convert: binary HKX → XML via HKX2E ──
+// ── Convert: binary HKX → XML via HKX2 ──
 
 static int RunConvert(string[] args)
 {
@@ -178,7 +178,7 @@ static int RunConvert(string[] args)
 
     try
     {
-        Console.WriteLine("HKBuild — HKX Binary → XML Converter (via HKX2E)");
+        Console.WriteLine("HKBuild — HKX Binary → XML Converter (via HKX2)");
         Console.WriteLine($"Reading: {inputFile}");
 
         var header = HKXHeader.SkyrimSE();
@@ -197,7 +197,7 @@ static int RunConvert(string[] args)
 
         using (var ws = File.Create(outputPath))
         {
-            var xs = new HavokXmlSerializer();
+            var xs = new XmlSerializer();
             xs.Serialize(root, header, ws);
         }
 
@@ -211,7 +211,7 @@ static int RunConvert(string[] args)
     }
 }
 
-// ── Pack: XML → binary HKX via HKX2E ──
+// ── Pack: XML → binary HKX via HKX2 ──
 
 static int RunPack(string[] args)
 {
@@ -240,7 +240,7 @@ static int RunPack(string[] args)
 
     try
     {
-        Console.WriteLine("HKBuild — XML → HKX Binary Packer (via HKX2E)");
+        Console.WriteLine("HKBuild — XML → HKX Binary Packer (via HKX2)");
         Console.WriteLine($"Reading: {inputFile}");
 
         // Run on a thread with a large stack to handle deeply nested XML (e.g. mt_behavior).
@@ -257,7 +257,7 @@ static int RunPack(string[] args)
                 hkRootLevelContainer root;
                 using (var rs = File.OpenRead(capturedInput))
                 {
-                    var des = new HavokXmlDeserializer();
+                    var des = new XmlDeserializer();
                     root = (hkRootLevelContainer)des.Deserialize(rs, header);
                 }
 
@@ -330,8 +330,8 @@ static int RunExtract(string[] args)
     }
 
     // Resolve the XML file path (mirrors PS1 search order: hkx2e → hkxcmd).
-    var hkx2eDir = Path.Combine(".reference", "vanilla skyrim behavior source",
-                                "xml", "meshes", "actors", "character", "behaviors");
+    var hkx2Dir = Path.Combine(".reference", "vanilla skyrim behavior source",
+                               "xml", "meshes", "actors", "character", "behaviors");
     var hkxcmdDir = Path.Combine(".reference", "Destructible Behavior XMLs",
                                  "character", "behaviors");
     var defaultOutBase = outBase ?? Path.Combine("behavior_src", "vanilla", "character", "behaviors");
@@ -354,7 +354,7 @@ static int RunExtract(string[] args)
     }
     else
     {
-        foreach (var dir in new[] { hkx2eDir, hkxcmdDir })
+        foreach (var dir in new[] { hkx2Dir, hkxcmdDir })
         {
             foreach (var candidate in new[] { name, $"{name}behavior" })
             {
@@ -373,7 +373,7 @@ static int RunExtract(string[] args)
     if (xmlPath == null)
     {
         Console.Error.WriteLine($"ERROR: Cannot find XML for '{name}'.");
-        Console.Error.WriteLine("Searched hkx2e and hkxcmd reference directories.");
+        Console.Error.WriteLine("Searched hkx2 and hkxcmd reference directories.");
         return 1;
     }
 
@@ -497,7 +497,7 @@ static int RunConvertAll(string[] args)
 
             using (var ws = File.Create(xmlPath))
             {
-                var xs = new HavokXmlSerializer();
+                var xs = new XmlSerializer();
                 xs.Serialize(root, header, ws);
             }
 
@@ -616,7 +616,7 @@ static int RunVerify(string[] args)
                 hkRootLevelContainer root;
                 using (var rs = File.OpenRead(xmlPath))
                 {
-                    var des = new HavokXmlDeserializer();
+                    var des = new XmlDeserializer();
                     root = (hkRootLevelContainer)des.Deserialize(rs, header);
                 }
                 using (var ws = File.Create(hkxPath))
@@ -687,7 +687,7 @@ static int RunVerify(string[] args)
             }
             using (var ws = File.Create(refXmlPath))
             {
-                var xs = new HavokXmlSerializer();
+                var xs = new XmlSerializer();
                 xs.Serialize(refRoot, header, ws);
             }
 
@@ -701,7 +701,7 @@ static int RunVerify(string[] args)
             }
             using (var ws = File.Create(ourXmlPath))
             {
-                var xs = new HavokXmlSerializer();
+                var xs = new XmlSerializer();
                 xs.Serialize(ourRoot, header, ws);
             }
 
@@ -867,10 +867,10 @@ static void PrintUsage()
     Console.Error.WriteLine("    Compile a character or behavior YAML source directory to Havok packfile XML.");
     Console.Error.WriteLine();
     Console.Error.WriteLine("  hkbuild pack <input.xml> [-o <output.hkx>]");
-    Console.Error.WriteLine("    Pack a Havok XML file into binary HKX format using HKX2E.");
+    Console.Error.WriteLine("    Pack a Havok XML file into binary HKX format using HKX2.");
     Console.Error.WriteLine();
     Console.Error.WriteLine("  hkbuild convert <input.hkx> [-o <output.xml>]");
-    Console.Error.WriteLine("    Convert a binary HKX file to XML using HKX2E (for verification).");
+    Console.Error.WriteLine("    Convert a binary HKX file to XML using HKX2 (for verification).");
     Console.Error.WriteLine();
     Console.Error.WriteLine("  hkbuild extract <behavior-name> [--force] [--xml-dir <dir>] [--out-base <dir>]");
     Console.Error.WriteLine("    Extract a behavior XML into YAML source tree format.");

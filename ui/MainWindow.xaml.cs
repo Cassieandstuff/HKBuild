@@ -3,7 +3,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using HKBuild;
-using HKX2E;
+using HKX2;
 using Microsoft.Win32;
 
 namespace HKBuildUI;
@@ -121,7 +121,7 @@ public partial class MainWindow : Window
                 string xmlContent;
                 using (var ms = new System.IO.MemoryStream())
                 {
-                    var xs = new HavokXmlSerializer();
+                    var xs = new XmlSerializer();
                     xs.Serialize(root, header, ms);
                     xmlContent = System.Text.Encoding.ASCII.GetString(ms.ToArray());
                 }
@@ -287,7 +287,7 @@ public partial class MainWindow : Window
                         hkRootLevelContainer packRoot;
                         using (var ms = new System.IO.MemoryStream(System.Text.Encoding.ASCII.GetBytes(xml)))
                         {
-                            var des = new HavokXmlDeserializer();
+                            var des = new XmlDeserializer();
                             packRoot = (hkRootLevelContainer)des.Deserialize(ms, header);
                         }
 
